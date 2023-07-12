@@ -70,10 +70,8 @@ const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-      <SvgXml style={styles.logo} xml={logoSvg} width={200} height={200} />
-        <Text style={styles.h1}>L4V4</Text>
-        <Text style={styles.h2}>daily task flow</Text>
-        <Text style={styles.h2}>managment</Text>
+      <SvgXml style={styles.logo} xml={logoSvg} width={150} height={150} />
+        <Text style={styles.h1}>Lava</Text>
       </View>
       <View style={styles.links}>
         <TouchableOpacity style={styles.btn1} onPress={() => navigation.navigate('Login')}>

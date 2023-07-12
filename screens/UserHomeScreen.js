@@ -136,7 +136,7 @@ const UserHomeScreen = () => {
     <View style={styles.back}>
         <View style={styles.nav}>
             <SvgXml style={styles.logo} xml={logoSvg} width={40} height={40} />
-            <Text style={styles.h1}>L4V4</Text>
+            <Text style={styles.h1}>Lava</Text>
         </View>
         <View style={styles.nav2}>
             <TouchableOpacity style={styles.navBtn} onPress={handleLogout}>

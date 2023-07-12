@@ -65,7 +65,7 @@ const SignupScreen = () => {
   return (
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
       <View style={styles.container}>
-      <SvgXml style={styles.logo} xml={logoSvg} width={200} height={200} />
+      <SvgXml style={styles.logo} xml={logoSvg} width={150} height={150} />
         {signupError !== '' && <Text style={styles.error}>{signupError}</Text>}
         <View style={styles.header}>
           <TextInput
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 80,
-    backgroundColor: '#121212'
+    backgroundColor: '#191919'
   },
   input: {
     height: 40,

@@ -70,7 +70,7 @@ const LoginScreen = () => {
   return (
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
     <View style={styles.container}>
-      <SvgXml style={styles.logo} xml={logoSvg} width={200} height={200} />
+      <SvgXml style={styles.logo} xml={logoSvg} width={150} height={150} />
         {loginError !== '' && <Text style={styles.error}>{loginError}</Text>}
           <View style={styles.header}>
               <TextInput
