@@ -45,8 +45,6 @@ Open the app using the Expo app or an emulator.
 
 Sign up or log in.
 
-Create or select a profile.
-
 Build your daily schedule with task blocks.
 
 Start the schedule to begin your day.

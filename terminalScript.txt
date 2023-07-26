@@ -1,0 +1,2 @@
+// Continous server logs -- terminal --
+sudo journalctl -fu l4v4.service

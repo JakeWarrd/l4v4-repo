@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+import { useNavigation } from '@react-navigation/native';
 
 // Generate a new token
 const generateToken = (payload) => {
@@ -7,14 +8,20 @@ const generateToken = (payload) => {
 };
 
 // Verify and decode a token
-const verifyToken = (token) => {
+const verifyToken = async (token) => {
+  const navigation = useNavigation();
+
   try {
     const decoded = jwt.verify(token, 'yugukey');
     return decoded;
   } catch (error) {
+    await AsyncStorage.removeItem('token');
+    navigation.navigate('Home');
+    console.log('Logged out due to an invalid token');
     throw new Error('Invalid token');
   }
 };
+
 
 // Authenticate a token and return the decoded payload
 const authenticateToken = (req, res, next) => {

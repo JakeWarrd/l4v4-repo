@@ -1,26 +1,11 @@
-import { View, Text, Button, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Picker } from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 
-import { SvgXml } from 'react-native-svg';
-
-const logoSvg = `
-<svg xmlns="http://www.w3.org/2000/svg" width="208.702" height="290.36" viewBox="0 0 208.702 290.36">
-  <g id="Group_5" data-name="Group 5" transform="translate(616.351 609.18) rotate(180)">
-    <g id="Group_2" data-name="Group 2" transform="translate(1024.005 999.084) rotate(180)">
-      <g id="Path_2" data-name="Path 2" transform="translate(616.346 474.564) rotate(90)" fill="none">
-        <path d="M-32.419,0H101.35l58.181,104.179L101.35,208.692H-32.419L-84.66,104.179Z" stroke="none"/>
-        <path d="M -13.90213012695312 30.00001525878906 L -51.11007690429688 104.200927734375 L -13.87562561035156 178.6922454833984 L 83.71556854248047 178.6922454833984 L 125.1829986572266 104.2027816772461 L 83.74301147460938 30.00001525878906 L -13.90213012695312 30.00001525878906 M -32.41912841796875 1.52587890625e-05 L 101.350227355957 1.52587890625e-05 L 159.5312805175781 104.1794815063477 L 101.350227355957 208.6922454833984 L -32.41912841796875 208.6922454833984 L -84.65976715087891 104.1794815063477 L -32.41912841796875 1.52587890625e-05 Z" stroke="none" fill="#d4d4d4"/>
-      </g>
-      <path id="Path_3" data-name="Path 3" d="M109.949,109.744l23.162-81.777L166.8,19.214,134.26,134.021,19.214,166.776,27.943,133.1Z" transform="translate(512 444.394) rotate(45)" opacity="0.333"/>
-    </g>
-  </g>
-</svg>
-`;
-
+import LogoSvg from '../components/LogoSvg';
 
 const ScheduleSetupScreen = () => {
   const navigation = useNavigation();
@@ -160,7 +145,7 @@ const ScheduleSetupScreen = () => {
     
       try {
         const token = await AsyncStorage.getItem('token');
-        const response = await fetch('http://localhost:4000/user/saveBloc', {
+        const response = await fetch('http://localhost:3000/user/saveBloc', {
           method: 'POST',
           headers: {
             Authorization: `Bearer ${token}`,
@@ -191,7 +176,9 @@ const ScheduleSetupScreen = () => {
     >
         {taskSets.map((taskSet, setIndex) => (
           <View key={setIndex} style={styles.taskSetContainer}>
-            <Text style={styles.h2}>Task Set {setIndex + 1}</Text>
+            <View style={styles.taskSetHeader}>
+               <Text style={styles.h2}>Task Set {setIndex + 1}</Text>
+            </View>
             <KeyboardAvoidingView style={styles.scrollContainer} behavior="padding">
               <TextInput
                 style={styles.taskSetInput}
@@ -218,7 +205,7 @@ const ScheduleSetupScreen = () => {
             style={styles.timePicker}
             selectedValue={taskSets[setIndex].startTimePeriod}
             onValueChange={(value) => handleStartTimePeriodChange(setIndex, value)}
-            itemStyle={{ color: '#d4d4d4', fontSize: 16 }}
+            itemStyle={{ color: '#393939', fontSize: 16 }}
           >
             <Picker.Item label="AM" value="AM" />
             <Picker.Item label="PM" value="PM" />
@@ -237,7 +224,7 @@ const ScheduleSetupScreen = () => {
             style={styles.timePickerR}
             selectedValue={taskSets[setIndex].endTimePeriod}
             onValueChange={(value) => handleEndTimePeriodChange(setIndex, value)}
-            itemStyle={{ color: '#d4d4d4', fontSize: 16 }}
+            itemStyle={{ color: '#393939', fontSize: 16 }}
           >
             <Picker.Item label="AM" value="AM" />
             <Picker.Item label="PM" value="PM" />
@@ -264,12 +251,9 @@ const ScheduleSetupScreen = () => {
          <TouchableOpacity style={styles.btn} onPress={() => handleCreateTask(setIndex)}>
           <Text style={styles.btnTxt}>Add Task</Text>
          </TouchableOpacity>
-
-        {setIndex > 0 && (
           <TouchableOpacity style={styles.btnx} onPress={() => handleDeleteTaskSet(setIndex)}>
             <Text style={styles.btnTxtx}>Delete Set</Text>
           </TouchableOpacity>
-        )}
       </View>
     ))}
    </KeyboardAwareScrollView>
@@ -279,7 +263,7 @@ const ScheduleSetupScreen = () => {
 return (
   <View style={styles.container}>
     <View style={styles.nav}>
-            <SvgXml style={styles.logo} xml={logoSvg} width={40} height={40} />
+            <LogoSvg style={styles.logo} width={40} height={40} />
             <Text style={styles.h1}>Schedule Setup</Text>
         </View>
         <View style={styles.nav2}>
@@ -310,7 +294,7 @@ const styles = StyleSheet.create({
 container: {
   flex: 1,
   padding: 55,
-  backgroundColor: '#191919'
+  backgroundColor: '#f1f1f1'
 },
 nav: {
   marginTop: 50,
@@ -324,61 +308,67 @@ nav2: {
 },
 navBtn: {
   borderWidth: 1,
-  borderColor: '#d4d4d4',
+  borderColor: '#393939',
   padding: 5,
   width: 90,
   borderRadius: 5,
-  backgroundColor: '#191919'
+  backgroundColor: '#f1f1f1'
 },
 navText: {
-  color: '#d4d4d4',
+  color: '#393939',
   textAlign: 'center',
 },
 navBtn2: {
   borderWidth: 1,
-  borderColor: '#d4d4d4',
+  borderColor: '#393939',
   padding: 5,
   width: 90,
   borderRadius: 5,
-  backgroundColor: '#d4d4d4'
+  backgroundColor: '#393939'
 },
 navText2: {
-  color: '#191919',
+  color: '#f1f1f1',
   textAlign: 'center',
 },
 h1: {
   fontSize: 25,
   marginLeft: 5,
   marginTop: 2,
-  color: '#d4d4d4'
+  color: '#393939'
 },
 logo: {
   marginLeft: -10,
+},
+taskSetHeader: {
+  borderWidth: 0,
+  borderColor: 'red'
 },
 h2: {
   alignSelf: 'center',
   fontSize: 18,
   marginBottom: 10,
-  color: '#d4d4d4',
+  color: '#393939',
 },
 blocNameInput: {
   marginTop: 50,
   borderWidth: 1,
   height: 40,
   borderWidth: 1,
-  borderColor: 'gray',
+  borderColor: '#393939',
   borderRadius: 5,
   fontSize: 18,
   textAlign: 'center',
-  color: '#d4d4d4',
+  color: '#393939',
 },
 taskSetContainer: {
   marginBottom: 60,
   marginHorizontal: -50,
   marginTop: -35,
-  backgroundColor: '#202020',
+  backgroundColor: '#f1f1f1',
   padding: 20,
-  borderRadius: 10
+  borderRadius: 10,
+  borderColor: '#393939',
+  borderWidth: 1,
 },
 taskSetInput: {
   borderWidth: 1,
@@ -389,7 +379,7 @@ taskSetInput: {
   borderRadius: 5,
   fontSize: 18,
   textAlign: 'center',
-  color: '#d4d4d4',
+  color: '#393939',
 },
 timeInputContainer: {
   flexDirection: 'row',
@@ -401,7 +391,7 @@ timeInput: {
   padding: 8,
   borderWidth: 1,
   borderColor: 'red',
-  color: '#d4d4d4',
+  color: '#393939',
 },
 tasksContainer: {
   marginTop: -38
@@ -418,7 +408,7 @@ taskInput: {
   borderWidth: 1,
   borderColor: 'grey',
   borderRadius: 5,
-  color: '#d4d4d4',
+  color: '#393939',
 },
 timeInputContainer: {
   flexDirection: 'row',
@@ -440,7 +430,7 @@ timeInput: {
   borderWidth: 1,
   borderColor: 'gray',
   borderRadius: 5,
-  color: '#d4d4d4',
+  color: '#393939',
 },
 timePicker: {
   width: 83,
@@ -460,8 +450,8 @@ scrollContent: {
 },
 btn1: {
   borderWidth: 1,
-  borderColor: '#d4d4d4',
-  backgroundColor: '#d4d4d4',
+  borderColor: '#393939',
+  backgroundColor: '#393939',
   paddingHorizontal: 15,
   borderRadius: 5,
   marginBottom: 25,
@@ -469,14 +459,14 @@ btn1: {
 },
 btnText1: {
   textAlign: 'center',
-  color: '#191919',
+  color: '#f1f1f1',
   fontSize: 20,
   margin: 10,
 },
 btn2: {
   borderWidth: 1,
-  borderColor: '#d4d4d4',
-  backgroundColor: '#d4d4d4',
+  borderColor: '#393939',
+  backgroundColor: '#393939',
   marginBottom: 25,
   paddingHorizontal: 15,
   borderRadius: 5,
@@ -489,21 +479,21 @@ btnText2: {
 },
 delBtn: {
   borderWidth: 1,
-  borderColor: '#d4d4d4',
+  borderColor: '#393939',
   paddingTop: 6,
   paddingHorizontal: 10,
   height: 30,
   borderRadius: 5,
-  backgroundColor: '#202020',
+  backgroundColor: '#393939',
 },
 delText: {
-  color: '#d4d4d4',
+  color: '#fff',
   textAlign: 'center',
 },
 btn: {
   borderWidth: 1,
-  borderColor: '#d4d4d4',
-  backgroundColor: '#d4d4d4',
+  borderColor: '#393939',
+  backgroundColor: '#393939',
   width: '38%',
   marginLeft: '31%',
   borderRadius: 5,
@@ -511,22 +501,22 @@ btn: {
 },
 btnTxt: {
   textAlign: 'center',
-  color: '#191919',
+  color: '#f1f1f1',
   fontSize: 15,
   margin: 8,
 },
 btnx: {
   borderWidth: 1,
-  borderColor: '#d4d4d4',
-  backgroundColor: '#202020',
+  borderColor: '#393939',
+  backgroundColor: '#f1f1f1',
   width: '38%',
-    marginLeft: '31%',
+  marginLeft: '31%',
   borderRadius: 5,
   marginTop: 20
 },
 btnTxtx: {
   textAlign: 'center',
-  color: '#d4d4d4',
+  color: '#393939',
   fontSize: 15,
   margin: 8,
 }

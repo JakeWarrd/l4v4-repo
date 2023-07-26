@@ -1,4 +1,4 @@
-import { View, Text, Button, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { KeyboardAvoidingView } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
@@ -6,21 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
 
-import { SvgXml } from 'react-native-svg';
-
-const logoSvg = `
-<svg xmlns="http://www.w3.org/2000/svg" width="208.702" height="290.36" viewBox="0 0 208.702 290.36">
-  <g id="Group_5" data-name="Group 5" transform="translate(616.351 609.18) rotate(180)">
-    <g id="Group_2" data-name="Group 2" transform="translate(1024.005 999.084) rotate(180)">
-      <g id="Path_2" data-name="Path 2" transform="translate(616.346 474.564) rotate(90)" fill="none">
-        <path d="M-32.419,0H101.35l58.181,104.179L101.35,208.692H-32.419L-84.66,104.179Z" stroke="none"/>
-        <path d="M -13.90213012695312 30.00001525878906 L -51.11007690429688 104.200927734375 L -13.87562561035156 178.6922454833984 L 83.71556854248047 178.6922454833984 L 125.1829986572266 104.2027816772461 L 83.74301147460938 30.00001525878906 L -13.90213012695312 30.00001525878906 M -32.41912841796875 1.52587890625e-05 L 101.350227355957 1.52587890625e-05 L 159.5312805175781 104.1794815063477 L 101.350227355957 208.6922454833984 L -32.41912841796875 208.6922454833984 L -84.65976715087891 104.1794815063477 L -32.41912841796875 1.52587890625e-05 Z" stroke="none" fill="#d4d4d4"/>
-      </g>
-      <path id="Path_3" data-name="Path 3" d="M109.949,109.744l23.162-81.777L166.8,19.214,134.26,134.021,19.214,166.776,27.943,133.1Z" transform="translate(512 444.394) rotate(45)" opacity="0.333"/>
-    </g>
-  </g>
-</svg>
-`;
+import LogoSvg from '../components/LogoSvg';
 
 const ScheduleEditScreen = ({ route }) => {
   const navigation = useNavigation();
@@ -201,7 +187,7 @@ const handleSaveData = async () => {
    try {
      const token = await AsyncStorage.getItem('token');
      console.log('Sending API request...');
-     const response = await fetch('http://localhost:4000/user/updateBloc', {
+     const response = await fetch('http://localhost:3000/user/updateBloc', {
        method: 'POST',
        headers: {
          Authorization: `Bearer ${token}`,
@@ -333,7 +319,7 @@ const renderNewTaskSets = () => {
               style={styles.taskSetInput}
               placeholder="Task Set Name"
               onChangeText={(value) => handleTaskSetNameChange(setIndex, value)}
-              placeholderTextColor="#fff9"
+              placeholderTextColor="#393939"
             />
           </KeyboardAvoidingView>
       <View style={styles.timeInputContainer}>
@@ -345,16 +331,17 @@ const renderNewTaskSets = () => {
           keyboardType="number-pad"
           maxLength={2}
           onChangeText={(value) => handleStartTimeChange(setIndex, value)}
-          placeholderTextColor="#fff9"
+          placeholderTextColor="#393939"
         />
 
         <Picker
           style={styles.timePicker}
           onValueChange={(value) => handleStartTimePeriodChange(setIndex, value)}
-          itemStyle={{ color: 'white', fontSize: 16 }}
+          itemStyle={{ color: '#393939', fontSize: 16 }}
+          
         >
           <Picker.Item label="AM" value="AM" />
-          <Picker.Item label="PM" value="PM" />
+          <Picker.Item label="PM" value="PM"/>
         </Picker>
 
         <TextInput
@@ -363,15 +350,15 @@ const renderNewTaskSets = () => {
           keyboardType="number-pad"
           maxLength={2}
           onChangeText={(value) => handleEndTimeChange(setIndex, value)}
-          placeholderTextColor="#fff9"
+          placeholderTextColor="#393939"
         />
         <Picker
           style={styles.timePickerR}
           onValueChange={(value) => handleEndTimePeriodChange(setIndex, value)}
-          itemStyle={{ color: 'white', fontSize: 16 }}
+          itemStyle={{ color: '#393939', fontSize: 16 }}
         >
-          <Picker.Item label="AM" value="AM" />
-          <Picker.Item label="PM" value="PM" />
+          <Picker.Item label="AM" value="AM"/>
+          <Picker.Item label="PM" value="PM"/>
         </Picker>
 
         </View>
@@ -382,7 +369,7 @@ const renderNewTaskSets = () => {
             style={styles.taskInput}
             placeholder="Task Name"
             onChangeText={(value) => handleTaskNameChange(setIndex, taskIndex, value)}
-            placeholderTextColor="#fff9"
+            placeholderTextColor="#393939"
           />
           <TouchableOpacity style={styles.delBtn} onPress={() => handleDeleteTask(setIndex, taskIndex)}>
             <Text style={styles.delText}>Delete</Text>
@@ -407,7 +394,7 @@ const renderNewTaskSets = () => {
   return (
     <View style={styles.container}>
       <View style={styles.nav}>
-              <SvgXml style={styles.logo} xml={logoSvg} width={40} height={40} />
+              <LogoSvg style={styles.logo} width={40} height={40} />
               <Text style={styles.h1}>Edit {blocData.blocName}</Text>
           </View>
           <View style={styles.nav2}>
@@ -438,7 +425,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 55,
-    backgroundColor: '#191919'
+    backgroundColor: '#f1f1f1'
   },
   nav: {
     marginTop: 50,
@@ -452,33 +439,33 @@ const styles = StyleSheet.create({
   },
   navBtn: {
     borderWidth: 1,
-    borderColor: '#d4d4d4',
+    borderColor: '#393939',
     padding: 5,
     width: 90,
     borderRadius: 5,
-    backgroundColor: '#191919'
+    backgroundColor: '#f1f1f1'
   },
   navText: {
-    color: '#d4d4d4',
+    color: '#393939',
     textAlign: 'center',
   },
   navBtn2: {
     borderWidth: 1,
-    borderColor: '#d4d4d4',
+    borderColor: '#393939',
     padding: 5,
     width: 90,
     borderRadius: 5,
-    backgroundColor: '#d4d4d4'
+    backgroundColor: '#f1f1f1'
   },
   navText2: {
-    color: '#191919',
+    color: '#393939',
     textAlign: 'center',
   },
   h1: {
     fontSize: 25,
     marginLeft: 5,
     marginTop: 2,
-    color: '#fff'
+    color: '#393939'
   },
   logo: {
     marginLeft: -10,
@@ -487,24 +474,26 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontSize: 18,
     marginBottom: 10,
-    color: '#d4d4d4',
+    color: '#393939',
   },
   blocNameInput: {
     marginTop: 50,
     borderWidth: 1,
     height: 40,
     borderWidth: 1,
-    borderColor: 'gray',
+    borderColor: '#393939',
     borderRadius: 5,
     fontSize: 18,
     textAlign: 'center',
-    color: '#d4d4d4',
+    color: '#393939',
   },
   taskSetContainer: {
     marginBottom: 60,
     marginHorizontal: -50,
     marginTop: -35,
-    backgroundColor: '#202020',
+    backgroundColor: '#f1f1f1',
+    borderWidth: 1,
+    borderColor: '#393939',
     padding: 20,
     borderRadius: 10
   },
@@ -513,11 +502,11 @@ const styles = StyleSheet.create({
     height: 40,
     marginBottom: 20,
     borderWidth: 1,
-    borderColor: 'gray',
+    borderColor: '#393939',
     borderRadius: 5,
     fontSize: 18,
     textAlign: 'center',
-    color: '#d4d4d4',
+    color: '#393939',
     marginTop: -10,
   },
   timeInputContainer: {
@@ -529,23 +518,24 @@ const styles = StyleSheet.create({
     marginRight: 8,
     padding: 8,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#393939',
+    color: '#393939'
   },
   taskContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 8,
     borderWidth: 0,
-    borderColor: '#d4d4d4',
+    borderColor: '#393939',
   },
   taskInput: {
     flex: 1,
     marginRight: 8,
     padding: 8,
     borderWidth: 1,
-    borderColor: 'grey',
+    borderColor: '#393939',
     borderRadius: 5,
-    color: '#d4d4d4',
+    color: '#393939',
   },
   timeInputContainer: {
     flexDirection: 'row',
@@ -565,25 +555,25 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 8,
     borderWidth: 1,
-    borderColor: 'gray',
+    borderColor: '#393939',
     borderRadius: 5,
-    color: '#d4d4d4',
+    color: '#393939',
     fontSize: 12
   },
   timePicker: {
     width: 83,
-    color: '#d4d4d4',
+    color: '#393939',
     marginVertical: -10
   },
   timePickerR: {
     width: 83,
-    color: '#d4d4d4',
+    color: '#393939',
     marginRight: -10,
     marginVertical: -10
   },
   ampm: {
     fontSize: 5,
-    color: '#d4d4d4',
+    color: '#393939',
   },
   scrollContainer: {
     flex: 1,
@@ -594,8 +584,8 @@ const styles = StyleSheet.create({
   },
   btn1: {
     borderWidth: 1,
-    borderColor: '#7771BC',
-    backgroundColor: '#7771BC',
+    borderColor: 'red',
+    backgroundColor: 'red',
     paddingHorizontal: 15,
     borderRadius: 5,
     marginBottom: 25,
@@ -603,41 +593,41 @@ const styles = StyleSheet.create({
   },
   btnText1: {
     textAlign: 'center',
-    color: '#d4d4d4',
+    color: '#393939',
     fontSize: 20,
     margin: 10,
   },
   btn2: {
     borderWidth: 1,
-    borderColor: '#7771BC',
-    backgroundColor: '#121212',
+    borderColor: '#f1f1f1',
+    backgroundColor: '#f1f1f1',
     marginBottom: 25,
     paddingHorizontal: 15,
     borderRadius: 5,
   },
   btnText2: {
     textAlign: 'center',
-    color: '#7771BC',
+    color: '#f1f1f1',
     fontSize: 20,
     margin: 10,
   },
   delBtn: {
     borderWidth: 1,
-    borderColor: '#7771BC',
+    borderColor: '#393939',
     paddingTop: 6,
     paddingHorizontal: 10,
     height: 30,
     borderRadius: 5,
-    backgroundColor: '#191919',
+    backgroundColor: '#393939',
   },
   delText: {
-    color: '#7771BC',
+    color: '#f1f1f1',
     textAlign: 'center',
   },
   btn: {
     borderWidth: 1,
-    borderColor: '#7771BC',
-    backgroundColor: '#7771BC',
+    borderColor: '#393939',
+    backgroundColor: '#393939',
     width: '38%',
     marginLeft: '31%',
     borderRadius: 5,
@@ -645,14 +635,14 @@ const styles = StyleSheet.create({
   },
   btnTxt: {
     textAlign: 'center',
-    color: '#d4d4d4',
+    color: '#f1f1f1',
     fontSize: 15,
     margin: 8,
   },
   btnx: {
     borderWidth: 1,
-    borderColor: '#7771BC',
-    backgroundColor: '#191919',
+    borderColor: '#393939',
+    backgroundColor: '#393939',
     width: '38%',
     marginLeft: '31%',
     borderRadius: 5,
@@ -660,7 +650,7 @@ const styles = StyleSheet.create({
   },
   btnTxtx: {
     textAlign: 'center',
-    color: '#7771BC',
+    color: '#f1f1f1',
     fontSize: 15,
     margin: 8,
   }

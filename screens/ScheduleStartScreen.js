@@ -1,24 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Button, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 
-import { SvgXml } from 'react-native-svg';
-
-const logoSvg = `
-<svg xmlns="http://www.w3.org/2000/svg" width="208.702" height="290.36" viewBox="0 0 208.702 290.36">
-  <g id="Group_5" data-name="Group 5" transform="translate(616.351 609.18) rotate(180)">
-    <g id="Group_2" data-name="Group 2" transform="translate(1024.005 999.084) rotate(180)">
-      <g id="Path_2" data-name="Path 2" transform="translate(616.346 474.564) rotate(90)" fill="none">
-        <path d="M-32.419,0H101.35l58.181,104.179L101.35,208.692H-32.419L-84.66,104.179Z" stroke="none"/>
-        <path d="M -13.90213012695312 30.00001525878906 L -51.11007690429688 104.200927734375 L -13.87562561035156 178.6922454833984 L 83.71556854248047 178.6922454833984 L 125.1829986572266 104.2027816772461 L 83.74301147460938 30.00001525878906 L -13.90213012695312 30.00001525878906 M -32.41912841796875 1.52587890625e-05 L 101.350227355957 1.52587890625e-05 L 159.5312805175781 104.1794815063477 L 101.350227355957 208.6922454833984 L -32.41912841796875 208.6922454833984 L -84.65976715087891 104.1794815063477 L -32.41912841796875 1.52587890625e-05 Z" stroke="none" fill="#d4d4d4"/>
-      </g>
-      <path id="Path_3" data-name="Path 3" d="M109.949,109.744l23.162-81.777L166.8,19.214,134.26,134.021,19.214,166.776,27.943,133.1Z" transform="translate(512 444.394) rotate(45)" opacity="0.333"/>
-    </g>
-  </g>
-</svg>
-`;
+import LogoSvg from '../components/LogoSvg';
 
 const ScheduleStartScreen = ({ route }) => {
   const navigation = useNavigation();
@@ -41,7 +27,7 @@ const ScheduleStartScreen = ({ route }) => {
     }
     console.log(token)
     // Send a request to the server to retrieve user data
-    const response = await fetch('http://localhost:4000/user', {
+    const response = await fetch('http://localhost:3000/user', {
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -70,7 +56,7 @@ const ScheduleStartScreen = ({ route }) => {
           console.log('Token not found');
           return;
         }
-        const response = await fetch(`http://localhost:4000/user/blocs/${blocId}`, {
+        const response = await fetch(`http://localhost:3000/user/blocs/${blocId}`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -105,7 +91,7 @@ const ScheduleStartScreen = ({ route }) => {
   };
 
   const handleEditBloc = () => {
-    navigation.navigate('ScheduleEdit', { blocId: blocId, blocData: bloc });
+    // navigation.navigate('ScheduleEdit', { blocId: blocId, blocData: bloc });
   };
 
   const handleDeleteBloc = async () => {
@@ -129,7 +115,7 @@ const ScheduleStartScreen = ({ route }) => {
         return;
       }
   
-      const response = await fetch(`http://localhost:4000/user/blocs/${blocId}`, {
+      const response = await fetch(`http://localhost:3000/user/blocs/${blocId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -175,7 +161,7 @@ const handleTaskClick = async (taskIndex, taskSetIndex, isChecked) => {
 
     console.log('=== ' + checked)
 
-    const response = await fetch('http://localhost:4000/user/tasks/update', {
+    const response = await fetch('http://localhost:3000/user/tasks/update', {
       method: 'PATCH',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -236,7 +222,7 @@ const handleTaskClick = async (taskIndex, taskSetIndex, isChecked) => {
     return (
       <View style={styles.container}>
         <View style={styles.nav}>
-            <SvgXml style={styles.logo} xml={logoSvg} width={40} height={40} />
+            <LogoSvg width={40} height={40} />
             <Text style={styles.h1}>Loading...</Text>
         </View>
       </View>
@@ -246,7 +232,7 @@ const handleTaskClick = async (taskIndex, taskSetIndex, isChecked) => {
   return (
     <View style={styles.container}>
       <View style={styles.nav}>
-            <SvgXml style={styles.logo} xml={logoSvg} width={40} height={40} />
+            <LogoSvg style={styles.logo} width={40} height={40} />
             <Text style={styles.h1}>{bloc.blocName}</Text>
         </View>
         <View style={styles.nav2}>
@@ -319,7 +305,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: '#191919',
+    backgroundColor: '#f1f1f1',
   },
   nav: {
     marginTop: 90,
@@ -335,21 +321,21 @@ const styles = StyleSheet.create({
   },
   navBtn: {
     borderWidth: 1,
-    borderColor: '#d4d4d4',
+    borderColor: '#393939',
     padding: 5,
     width: 90,
     borderRadius: 5,
-    backgroundColor: '#191919',
+    backgroundColor: '#f1f1f1',
   },
   navText: {
-    color: '#d4d4d4',
+    color: '#393939',
     textAlign: 'center',
   },
   h1: {
     fontSize: 25,
     marginLeft: 5,
     marginTop: 2,
-    color: '#d4d4d4'
+    color: '#393939'
   },
   logo: {
     marginLeft: -10,
@@ -364,57 +350,58 @@ const styles = StyleSheet.create({
   blocName: {
     fontSize: 28,
     fontWeight: '500',
-    color: '#d4d4d4',
+    color: '#393939',
   },
   blocBio: {
     fontSize: 25,
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
-    color: '#d4d4d4',
+    color: '#393939',
     marginBottom: 5,
-    opacity: 0.8
+    opacity: 1
   },
   time: {
     flexDirection: 'row',
     justifyContent: 'center',
     fontSize: 19,
-    color: '#d4d4d4',
+    color: '#393939',
     opacity: 0.9
   },
   taskBox: {
-    backgroundColor: '#202020',
+    backgroundColor: '#EFEFEF',
     borderRadius: 10,
     padding: 30,
     width: 285,
     marginTop: 30,
+    borderWidth: 1,
+    borderColor: '#393939',
   },
   task: {
     textAlign: 'center',
     margin: 15,
     fontSize: 18,
-    color: '#d4d4d4',
+    color: '#393939',
   },
   crossedOutTask: {
     textDecorationLine: 'line-through',
     opacity: 0.2
   },
   completedBox: {
-    color: '#d4d4d4',
+    color: '#393939',
     textAlign: 'center',
     fontSize: 20,
     paddingVertical: 10,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#202020',
-    backgroundColor: '#202020',
+    borderColor: '#EFEFEF',
+    backgroundColor: '#EFEFEF',
     marginTop: 20
   },
   completedTxt: {
-    color: '#d4d4d4',
+    color: '#393939',
     textAlign: 'center',
     fontSize: 18,
-
   },
   nextTaskContainer: {
     position: 'absolute',
@@ -426,32 +413,32 @@ const styles = StyleSheet.create({
   },
   nextTaskTitle: {
     fontSize: 16,
-    color: '#d4d4d4',
-    opacity: 0.8
+    color: '#393939',
+    opacity: 0.9
   },
   nextTaskSetName: {
     fontSize: 14,
-    color: '#d4d4d4',
+    color: '#393939',
     marginTop: 5,
-    opacity: 0.6
+    opacity: 0.8
   },
   nextTaskTime: {
     fontSize: 14,
     marginTop: 5,
-    color: '#d4d4d4',
-    opacity: 0.6
+    color: '#393939',
+    opacity: 0.8
   },
   noNextTask: {
     fontSize: 14,
     marginTop: 5,
     fontStyle: 'italic',
-    color: '#d4d4d4',
+    color: '#393939',
   },
   errorMessage: {
     fontSize: 18,
     marginHorizontal: 80,
     textAlign: 'center',
-    color: '#d4d4d4',
+    color: '#393939',
   }
 });
 

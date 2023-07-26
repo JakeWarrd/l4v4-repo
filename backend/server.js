@@ -67,10 +67,6 @@ app.post('/signup', async (req, res) => {
    // Convert the first letter of the email to lowercase
    email = email.charAt(0).toLowerCase() + email.slice(1);
 
-  console.log('SERVER: ' + username);
-  console.log('SERVER: ' + email);
-  console.log('SERVER: ' + password);
-
   try {
     if (!username || username.length < 3) {
       return res.status(400).json({ message: 'Username: 3 characters minimum' });
@@ -232,12 +228,6 @@ app.post('/user/updateBloc', authenticateToken, async (req, res) => {
     const blocData = req.body;
     const userId = req.user.id;
 
-    console.log('Received blocData:', blocData);
-    console.log('Received blocID:', blocData.blocId);
-    console.log('Searching for:', blocData.blocName);
-    console.log('Received startTime:', blocData.taskSets[0].startTime);
-    console.log('Received endTime:', blocData.taskSets[0].endTime);
-
     // Find the user by their ID
     const user = await User.findById(userId);
 
@@ -268,9 +258,6 @@ app.post('/user/updateBloc', authenticateToken, async (req, res) => {
 
     // Save the updated user
     await user.save();
-
-    console.log('Updated user:', user);
-
   
     res.status(200).json({ message: 'Bloc data updated successfully' });
   } catch (error) {
@@ -394,7 +381,7 @@ app.patch('/user/tasks/update', authenticateToken, async (req, res) => {
   await user.save();
 
   // Log the updated user
-  console.log('User after update:', user);
+  console.log('Task after update:', task);
 
     res.json({ message: 'Task updated successfully', task });
   } catch (error) {
@@ -407,7 +394,7 @@ app.get('/', (req, res) => {
     res.send('Servers awaiting requests...')
 })
 
-app.listen(8080, () => {
-  console.log('Server running on port 8080');
+app.listen(3000, () => {
+  console.log('Server running on port 3000');
   connectDB();
 });
